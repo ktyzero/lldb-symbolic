@@ -2,6 +2,7 @@
 
 import lldb
 import fblldbbase as fb
+import sys
 
 def lldbcommands():
   return [ SymbolicAddresses() ]
@@ -24,4 +25,4 @@ class SymbolicAddresses(fb.FBCommand):
       arg = arg.strip()
       interpreter.HandleCommand('image lookup -a {}'.format(arg), self.context, object)
       if object.GetOutput():
-        print >> self.result, object.GetOutput().strip().splitlines()[1].replace('Summary:', 'frame #{}: {}'.format(line, arg))
+        print(self.result, object.GetOutput().strip().splitlines()[1].replace('Summary:', 'frame #{}: {}'.format(line, arg), file=sys.stdout)
